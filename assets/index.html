@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Node Test</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Node Test...</h1>
+    <br />
+    <a href="fluid.html">fluid page</a>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/static/jquery/js/jquery-1.10.1.min.js"><\/script>')</script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://coopdo.com:8081');
+      socket.on('moving', function (data) {
+        console.log('Other people is moving: ' + JSON.stringify(data));
+        // socket.emit('my other event', { my: 'data' });
+      });
+      $(document).mousemove(function(e) {
+        var x = e.pageX;
+        var y = e.pageY;
+        console.log('my mousemoving: (' + x + ', ' + y + ')');
+        socket.emit('mousemove', { 'x': x, 'y': y });
+      });
+    </script>
+  </body>
+</html>
